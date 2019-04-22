@@ -1,6 +1,7 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_team, only: %i[show edit update destroy]
+  before_action :owner_only, only: %i(edit update)
 
   def index
     @teams = Team.all
@@ -55,6 +56,14 @@ class TeamsController < ApplicationController
 
   def team_params
     params.fetch(:team, {}).permit %i[name icon icon_cache owner_id keep_team_id]
+  end
+
+  def owner?
+    @team.owner_id == current_user.id
+  end
+  
+  def owner_only
+    redirect_to current_user, notice: "オーナーのみに許された機能です" unless owner?
   end
 
 end
