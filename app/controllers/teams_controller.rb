@@ -48,6 +48,13 @@ class TeamsController < ApplicationController
     @team = current_user.keep_team_id ? Team.find(current_user.keep_team_id) : current_user.teams.first
   end
 
+  def authority_transfer
+    @team = Team.find_by(id: params[:team_id])
+    @team.update(owner_id: params[:id])
+    TeamMailer.change_owner_notification(params[:id], @team).deliver
+    redirect_back(fallback_location: root_path)
+  end
+
   private
 
   def set_team
