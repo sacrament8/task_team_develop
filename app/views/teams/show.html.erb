@@ -46,6 +46,9 @@
                       <% if owner? || yourself?(assign) %>
                         <td><%= link_to '削除', team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
                       <% end %>
+                      <% if owner? && !yourself?(assign) %>
+	                      <td><%= link_to "権限移動", authority_transfer_team_path(assign.user_id, team_id: @team.id), method: :patch, class: "btn btn-sm btn-warning text-light" %></td>
+                      <% end %>
                     </tr>
                   <% end %>
                 </tbody>
