@@ -23,4 +23,7 @@ module ApplicationHelper
       article_path(article)
     end
   end
+
+  
+
 end
