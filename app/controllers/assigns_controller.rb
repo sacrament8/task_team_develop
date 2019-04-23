@@ -11,7 +11,7 @@ class AssignsController < ApplicationController
       redirect_to team_url(team), notice: 'アサインに失敗しました！'
     end
   end
-
+  # チームからメンバーを削除するアクション
   def destroy
     assign = Assign.find(params[:id])
     destroy_message = assign_destroy(assign, assign.user)
