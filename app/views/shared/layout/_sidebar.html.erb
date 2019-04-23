@@ -29,6 +29,11 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <% @working_team.agendas.each do |agenda| %>
+          <% team = @working_team%>
+          <% if agenda.user_id == current_user.id || agenda.team.owner_id == current_user.id %>
+            <%= link_to "❌", agenda_path(agenda), class: "delete_agenda",
+                                  data: { confirm: "アジェンダ: #{agenda.title}を削除しますか?"}, method: :delete %>
+          <% end %>
           <li class="nav-item has-treeview menu-open">
             <a href="#" class="nav-link">
               <i class="fa fa-circle-o nav-icon"></i>
@@ -56,6 +61,21 @@
       </ul>
     </nav>
     <!-- /.sidebar-menu -->
-  </div>
+  </>
   <!-- /.sidebar -->
 </aside>
+
+<style>
+.delete_agenda {
+  position: relative;
+  top: 20px;
+  left: 185px;
+  z-index: 10;
+  width: 10px;
+  height: 10px;
+}
+.delete_agenda:hover {
+  opacity: 0.8;
+}
+
+</style>
